@@ -1,0 +1,20 @@
+.general{
+    display: inline-block;
+}
+samp{
+    display: inline-block;
+    color: white;
+}
+.input_filed{
+    height: 40px;
+    width: 900px;
+    margin-bottom: 10px;
+    border-radius: 0.25rem;
+
+}
+.input_filed_bio{
+    height: 300px;
+    width: 900px;
+    margin-bottom: 10px;
+    border-radius: 0.25rem;
+}

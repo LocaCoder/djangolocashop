@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% block title %}Packages{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/package/show_packages.css' %}">
+{% endblock %}
+{% block content %}
+    {#    {% include 'inc/loader.html' %}#}
+    <div class="container">
+        <section>
+            <div class="section-header ">
+                <div class="d-flex justify-content-start">
+                    <a href="{% url 'main:show_package' %}" class=" m-1 btn" aria-expanded="false">
+                        all
+                    </a>
+                    {% for category in categories %}
+                        {% if category.is_root_node %}
+                            <div class="btn-group m-1">
+
+                                <a href="{{ category.get_parent_url }}" class="btn" aria-expanded="false">
+                                    {{ category.name }}
+                                </a>
+                                <button type="button" class="btn-toggle dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu btn-menu">
+                                    {% if category.get_children %}
+                                        {% for child in category.get_children %}
+                                            <li><a class=" dropdown-item"
+                                                   href="{% url 'main:category_filter' child.name %}">{{ child.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <form method="get" class="d-flex" role="search">
+                    {{form}}
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </section>
+        <section class="section-main-trainings p-2">
+            {% for package_free in packages_free %}
+                <div class="card cart-style">
+                    <img src="{{ package_free.image.url }}" class="card-img-top" style="width: 300px; height: 200px "
+                         alt="...">
+                    <div class="card-body cart-body-style">
+                        <h5 class="card-title">{{ package_free.name }}</h5>
+                        <hr>
+                        <p class="col-20 text-wrap text-truncate">{{ package_free.description }}</p>
+                        <a href="{{ package_free.get_absolute_url }}" class="btn text-black btn-site">More
+                            information</a>
+                    </div>
+                </div>
+            {% endfor %}
+            {% for package_premium in packages_premium %}
+                <div class="card cart-style">
+                    <img src="{{ package_premium.image.url }}" class="card-img-top" style="width: 300px; height: 200px "
+                         alt="...">
+                    <div class="card-body cart-body-style">
+                        <h5 class="card-title"
+                            style="display: flex; justify-content:space-between; align-items: center;">{{ package_premium.name }}
+                            <img style="width: 25px;height: 25px" src="{% static 'main/images/icons8-star-48.ico' %}"
+                                 alt=""></h5>
+                        <hr>
+                        <p class="col-20 text-wrap text-truncate">{{ package_premium.description }}</p>
+                        <a href="{{ package_premium.get_absolute_url }}" class="btn text-black btn-site">More
+                            information</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </section>
+    </div>
+{% endblock %}

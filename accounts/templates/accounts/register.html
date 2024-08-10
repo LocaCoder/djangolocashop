@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'accounts/css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <form class="register_form" action="" method="post">
+        <h4 class="text-white">Register</h4>
+        {% csrf_token %}
+        {{ form }}
+        <div class="register_button">
+            <input class="btn btn-light fw-bold fs-5" type="submit" value="Register">
+            <a href="{% url 'accounts:user_login' %}" class="btn btn-light fw-bold fs-5">Login</a>
+        </div>
+
+    </form>
+{% endblock %}

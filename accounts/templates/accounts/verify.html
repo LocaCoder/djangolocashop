@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Verify{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'accounts/css/verify.css' %}">
+{% endblock %}
+{% block content %}
+    <form class="verify_form" action="" method="post">
+        <h4 class="text-white">Verify</h4>
+        <p class="text-white">{{ code }}</p>
+        {% csrf_token %}
+        {{ form }}
+        <div class="verify_button">
+            <input class="btn btn-light fw-bold fs-5" type="submit" value="Check">
+        </div>
+    </form>
+{% endblock %}

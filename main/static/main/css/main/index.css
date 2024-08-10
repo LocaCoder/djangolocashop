@@ -1,0 +1,110 @@
+body {
+    height: 2000px;
+}
+
+.head_main_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.header_main_img {
+    width: 700px;
+    height: 500px;
+    border-radius: 12px;
+}
+
+.head_main_section a {
+    text-decoration: none;
+}
+
+body {
+    background-color: #fbf4da;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: #ff9b296e;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.section-header a {
+    padding: 10px 20px 10px 20px;
+    border-radius: 12px;
+    color: black;
+    border: none;
+    background-color: #fbf4da;
+}
+
+.section-main-trainings {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 15px;
+
+}
+
+.btn-site {
+    border-radius: 8px;
+    color: black;
+    border: none;
+    background-color: #ff9b296e;
+}
+
+.cart-style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px #ff9b296e;
+}
+
+.cart-style img {
+    border-radius: inherit;
+}
+
+.cart-style_item h5 {
+    color: #f89939;
+    font-weight: 600;
+}
+
+.cart-body-style {
+    display: block;
+    margin-right: auto;
+    width: 300px;
+    height: 200px;
+    padding: 10px;
+}
+
+.cart-body-style p {
+    height: 70px;
+}
+
+.sub {
+    border-radius: 8px;
+    color: white;
+    border: none;
+    background-color: #f89939;
+}
+.bg-content-email{
+    background-color: #fbf4da;
+}
+.bg-email-box {
+    background-color: rgba(248, 153, 57, 0.48);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    animation: transitionIn 0.75s;
+}
+.btn-email{
+    background-color: #fbf4da;
+}

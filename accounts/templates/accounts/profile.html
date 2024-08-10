@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/profile_item/general.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/css/profile_item/change_password.css' %}">
+
+{% endblock %}
+{% block content %}
+    <div class="container cont light-style flex-grow-1 container-p-y">
+        <h4 class="font-weight-bold text-dark py-3 mb-4 mt-4">
+            Account settings
+        </h4>
+        <div class="card profile-card overflow-hidden">
+            <div class="row no-gutters row-bordered row-border-light">
+                <div class="col-md-3 pt-0">
+                    <div class="list-group list-group-flush text-dark account-settings-links">
+                        <a class="list-group-item list-group-item-action active" data-toggle="list"
+                           href="#account-info">Info</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                           href="#account-change-password">Change password</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list"
+                           href="#edit-profile">Edit Profile</a>
+                        <a class="list-group-item list-group-item-action"
+                           href="{% url 'main:main' %}">Exit</a>
+
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="account-info">
+                            <div class="card-body pb-2 text-dark">
+                                <div style="display: flex;align-items: end; gap: 10px; justify-content: start">
+                                    {% if  request.user.image %}
+                                        <img class="rounded-circle" style="width: 50px;height: 50px"
+                                             src="{{ request.user.image.url }}" alt="">
+                                    {% else %}
+                                    <img class="rounded-circle" style="width: 50px;height: 50px"
+                                         src="{% static 'main/images/7440683.png' %}" alt="">
+                                    {% endif %}
+                                    <div>
+                                        <h4 style="display: inline">{{ request.user.full_name | title }} </h4>
+                                        <span>{{ request.user.email }}</span>
+                                    </div>
+
+                                </div>
+                                <div class="bio">
+                                    <span class="text-dark">Bio :</span>
+                                    <div class="bio_text">
+                                        {{ request.user.bio }}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr class="border border-2 border-dark m-0 text-dark">
+                            <div class="card-body pb-2 text-dark">
+                                <h6 class="mb-4">Package Saved</h6>
+                                {% for vt in vote %}
+                                    <a href="{% url 'main:package_detail' vt.package.id vt.package.slug %}"
+                                       class="btn btn-info">
+                                        {{ vt.package.name }}
+                                    </a>
+                                {% endfor %}
+
+                            </div>
+                            <hr class="border border-2 border-dark m-0 text-dark">
+
+                            <div class="card-body pb-2 text-dark">
+                                <h6 class="mb-4">Subscribe</h6>
+                                {% if sub_buy %}
+                                    {% for sb in sub_buy %}
+                                        <p class="alert alert-success">{{ sb.user.full_name }}
+                                            | {{ sb.sub_type.sub_time_select }}</p>
+                                        <p></p>
+                                        {#                                    <p>{{ sb.is_active }}</p>#}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="alert alert-info">dont have subscription</p>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2 mb-2">
+                                <h4 class="text-dark">Change Password</h4>
+
+                                <form action="{% url 'accounts:password_change' %}"
+                                      method="post">
+                                    <div class="change_password_form">
+                                        {% csrf_token %}
+                                        {{ change_password_form }}
+                                    </div>
+
+                                    <div class="change_password_button">
+                                        <input type="submit" class="btn btn-light border-0 fw-bold fs-6"
+                                               value="Change Password">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade pb-2" id="edit-profile">
+                            <div class="card-body pb-2">
+                                <h4 class="text-dark">Edit Profile</h4>
+                                <form action="" method="post" enctype="multipart/form-data" class="general  media align-items-center">
+                                    {% csrf_token %}
+                                    <samp>Email : </samp>
+                                    {{ form.email }}
+                                    <samp>Phone Number : </samp>
+                                    {{ form.phone_number }}
+                                    <samp>Full Name : </samp>
+                                    {{ form.full_name }}
+                                    <samp>Bio : </samp>
+                                    {{ form.bio }}
+                                    <samp>Image : </samp>
+                                    {{ form.image }}<br><br>
+                                    <input class="btn btn-light fw-bold fs-6" type="submit" value="Edit Profile">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+{% block script %}
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+    </script>
+{% endblock %}

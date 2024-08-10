@@ -1,0 +1,83 @@
+
+body {
+    background-color: #fbf4da;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: #ff9b296e;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.section-header a {
+    padding: 10px 20px 10px 20px;
+    border-radius: 12px;
+    color: black;
+    border: none;
+    background-color: #fbf4da;
+}
+
+.section-main-trainings {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 15px;
+
+}
+
+.btn-site {
+    border-radius: 8px;
+    color: black;
+    border: none;
+    background-color: #ff9b296e;
+}
+
+.cart-style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px #ff9b296e;
+}
+
+.cart-style img {
+    border-radius: inherit;
+}
+
+.cart-body-style {
+    display: block;
+    margin-right: auto;
+    width: 300px;
+    height: 200px;
+    padding: 10px;
+}
+
+.cart-body-style p {
+    height: 70px;
+}
+.btn-toggle {
+    border: none;
+    background-color: #ff9b296e;
+    border-radius: 0 12px 12px 0;
+}
+.btn-menu{
+    border: none;
+    padding: 0;
+    border-radius: 12px;
+    background-color: #ff9b296e;
+}
+.btn-menu a{
+    background-color: #ff9b296e;
+}
+.btn-menu a:active{
+    background-color: #fbf4da;
+    color: black;
+}

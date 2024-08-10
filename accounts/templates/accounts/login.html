@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{% endblock %}
+{% block content %}
+    <form class="login_form text-black" action="" method="post">
+    <h4 class="text-white">Login</h4>
+        {% csrf_token %}
+        {{ form }}
+        <div class="login_button">
+            <input class="btn btn-light fw-bold fs-5" type="submit" value="Login">
+            <a href="{% url  'accounts:user_register' %}" class="btn btn-light fw-bold fs-5">Register</a>
+        </div>
+        <div><a class="change text-white" href="{% url 'accounts:password_reset' %}">Forgot Password</a></div>
+    </form>
+{% endblock %}

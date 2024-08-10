@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'main/css/main/detail.css' %}">
+{% endblock %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="container">
+        {% for package_free in packages_free %}
+            <div class="section-header">
+                <div class="section-header_item">
+                    <div class="section-header_item-img">
+                        <img style="width: 60px;height: 60px;border: 2px solid black" src="{{ package_free.image.url }}"
+                             class="rounded-circle"
+                             style="width: 300px; height: 200px "
+                             alt="...">
+                    </div>
+                    <div class="section-header_item-text">
+                        <div>
+                            <h5 class="card-title">{{ package_free.name }}</h5>
+                            <p>Created : {{ package_free.user.full_name }}</p>
+                        </div>
+
+                    </div>
+                    <div>
+                        {% if can_like %}
+                            <a href="{% url 'main:package_un_save' package_free.id %}"
+                               class=" btn btn-primary m-2">Un Save to
+                                Profile</a>
+                        {% else %}
+
+                            <a href="{% url 'main:package_save' package_free.id %}"
+                               class=" btn btn-primary m-2">Save to
+                                Profile</a>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div>
+                <p>{{ package_free.description | safe }}</p>
+            </div>
+        {% endfor %}
+        {% for package_premium in packages_premium %}
+            <div class="section-header">
+                <div class="section-header_item">
+                    <div class="section-header_item-img">
+                        <img style="width: 60px;height: 60px;border: 2px solid black"
+                             src="{{ package_premium.image.url }}"
+                             class="rounded-circle"
+                             style="width: 300px; height: 200px "
+                             alt="...">
+                    </div>
+                    <div class="section-header_item_box">
+                        <div class="section-header_item-text">
+                            <h5 style="display: inline-block" class=""
+                                style="display: flex; justify-content:space-between; align-items: center;">{{ package_premium.name }}
+                                <img style="width: 25px;height: 25px"
+                                     src="{% static 'main/images/icons8-star-48.ico' %}"
+                                     alt="">
+                            </h5>
+                            <p>Created : {{ package_premium.user.full_name }}</p>
+                        </div>
+                    </div>
+                    <div>
+                        {% if can_like %}
+                            <a href="{% url 'main:package_un_save' package_premium.id %}"
+                               class=" btn btn-primary m-2">Un Save to
+                                Profile</a>
+                        {% else %}
+
+                            <a href="{% url 'main:package_save' package_premium.id %}"
+                               class=" btn btn-primary m-2">Save to
+                                Profile</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <p>{{ package_premium.description | safe }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <fieldset>
+        <legend>Comments : {{ comments.count }}</legend>
+        <div class="comment_box p-2">
+            {% for comment in comments %}
+                <div class="comment_box_item mx-3 my-3 card">
+                    <h4 class="card-header comment_box_header_item text-dark"><img
+                            class="border border-1 rounded-circle me-3"
+                            src="{{ request.user.image.url }}" alt="avatar"
+                            width="30"
+                            height="30"/>{{ comment.user.full_name }}
+                        | {{ comment.created | timesince }}</h4>
+                    <p class="card-body text-black">{{ comment.content|safe }}</p>
+                    {% recursetree comments %}
+                        <div>{{ node.content }}</div>
+                        <p>{{ children }}</p>
+                    {% endrecursetree %}
+                    {% if request.user.is_authenticated %}
+                        {% for reply in comment.get_children %}
+                            <div class="r_comment mx-3 my-3 card">pp
+                                <div class="card-header r_comment_box_header_item text-dark">
+                                    <h6 class="">{{ reply.user.full_name }}</h6>
+                                </div>
+                                <div class="p-2 bg-white">
+                                    <p class="">{{ reply.body | safe }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="p-3 m-2">
+                            <form action="{% url 'main:reply_comment' packages.id comment.id %}" method="post">
+                                {% csrf_token %}
+                                {{ reply_form }}
+                                <input type="submit" value="Reply Comment" data-mdb-button-init
+                                       data-mdb-ripple-init
+                                       class="mt-3 btn btn-send">
+                            </form>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% empty %}
+                <p>No Comments yet...</p>
+            {% endfor %}
+            <br>
+            {% if request.user.is_authenticated %}
+                <div class="mx-3 w-75 text-body">
+                    <div class="row d-flex justify-content-start">
+                        <div class="col-md-10 col-lg-8 col-xl-6">
+                            <div class="card new_com">
+                                <div class="card-body p-4">
+                                    <div class=" w-100">
+                                        <div class="d-flex mb-3 align-items-center">
+                                            {% if request.user.image %}
+                                                <img class="rounded-circle me-3"
+                                                     src="{{ request.user.image.url }}" alt="avatar"
+                                                     width="65"
+                                                     height="65"/>
+                                            {% else %}
+                                                <img class="rounded-circle me-3" style="width: 50px;height: 50px"
+                                                     src="{% static 'main/images/7440683.png' %}" alt="">
+                                            {% endif %}
+                                            <div>
+                                                <h5>Add a comment</h5>
+                                                <span>{{ request.user.full_name }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-100">
+                                            <form action="" method="post">
+                                                <div data-mdb-input-init class="form-outline">
+                                                    {% csrf_token %}
+                                                    {{ forms.as_p }}
+                                                </div>
+                                                <div class="d-flex justify-content-between mt-3">
+                                                    <input type="submit" data-mdb-button-init data-mdb-ripple-init
+                                                           class="btn btn-send">
+                                                    </input>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </fieldset>
+{% endblock %}
